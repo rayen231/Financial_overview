@@ -54,7 +54,7 @@ The backend is powered by **FastAPI** and designed with a microservices approach
 ## 🛠️ **Technologies Used**  
 - **Frontend**: Angular (Latest version), Bootstrap.  
 - **Backend**: FastAPI, Python.  
-- **APIs**: Yahoo News, Google Search API.  
+- **APIs**: Yahoo News, groq key , alphavantage.  
 - **AI Models**: LangChain, CrewAI, LLAMA 3.  
 
 ---
