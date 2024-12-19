@@ -1,0 +1,91 @@
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+  rel="stylesheet"
+/>
+
+<!-- Error Message Section -->
+<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+  <strong>Error!</strong> {{ errorMessage }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div *ngIf="loading" class="d-flex justify-content-center align-items-center my-4">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<!-- Stock Details Section -->
+<div *ngIf="stockDetails" class="container mt-5">
+  <div class="card shadow-lg rounded-4">
+    <!-- Card Header -->
+    <div class="card-header text-center bg-primary text-white">
+      <h1 class="display-4">{{ stockSymbol.toUpperCase() }}</h1>
+    </div>
+    
+    <!-- Card Body -->
+    <div class="card-body">
+
+      <!-- Current Price Section -->
+      <div class="mb-4 d-flex justify-content-between align-items-center">
+        <h3 class="text-primary">Current Price: <span class="fs-2">${{ stockDetails.curent_stock_price }}</span></h3>
+        <button class="btn btn-outline-primary rounded-circle shadow-sm" (click)="refreshPrice()">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+      </div>
+
+      <!-- Price History Section -->
+      <div class="mb-5">
+        <h3 class="mb-3">Price History</h3>
+        <div class="bg-light p-3 rounded-3 shadow-sm">
+          <canvas id="priceHistoryChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest News Section -->
+  <div class="container mt-5">
+    <h3 class="mb-4">Latest News</h3>
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Left Arrow -->
+      <button class="btn btn-outline-primary rounded-circle" (click)="previousNews()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+  
+      <!-- News Cards Section -->
+      <div class="d-flex overflow-hidden" style="width: 75%;">
+        <div class="d-flex" style="transition: transform 0.3s ease;">
+          <div
+            *ngFor="let news of visibleNews"
+            class="card mx-2 shadow-lg"
+            (mouseenter)="toggleHover($event, true)"
+            (mouseleave)="toggleHover($event, false)"
+            (click)="openNews(news.url)"
+            style="width: 18rem; flex-shrink: 0; transition: transform 0.3s ease; cursor: pointer; border-radius: 10px;"
+          >
+            <!-- Image Section -->
+            <img
+              [src]="news.urlToImage"
+              [alt]="news.title"
+              class="card-img-top"
+              style="height: 180px; object-fit: cover; border-radius: 10px 10px 0 0;"
+            />
+            <!-- News Content -->
+            <div class="card-body">
+              <h5 class="card-title text-truncate">{{ news.title }}</h5>
+              <p class="card-text text-truncate" style="max-height: 4.5em;">
+                {{ news.content }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Arrow -->
+      <button class="btn btn-outline-primary rounded-circle" (click)="nextNews()">
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<button (click)="goBack()" class="btn btn-secondary mb-4">Return</button>

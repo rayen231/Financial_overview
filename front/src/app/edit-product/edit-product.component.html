@@ -1,0 +1,78 @@
+<div class="container mt-3">
+    <h2>Edit Product</h2>
+    <form #editProductForm="ngForm" (ngSubmit)="editProduct()" novalidate>
+      
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="name" 
+          [(ngModel)]="productName" 
+          name="name" 
+          required 
+          #nameField="ngModel"
+        />
+        <div *ngIf="nameField.invalid && nameField.touched" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+  
+      
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="description" 
+          [(ngModel)]="productDescription" 
+          name="description" 
+          required 
+          #descriptionField="ngModel"
+        />
+        <div *ngIf="descriptionField.invalid && descriptionField.touched" class="text-danger">
+          Description is required.
+        </div>
+      </div>
+  
+      
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          id="price" 
+          [(ngModel)]="productPrice" 
+          name="price" 
+          required 
+          #priceField="ngModel"
+        />
+        <div *ngIf="priceField.invalid && priceField.touched" class="text-danger">
+          Price is required.
+        </div>
+      </div>
+  
+      
+      <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          id="stock" 
+          [(ngModel)]="productStock" 
+          name="stock" 
+          required 
+          #stockField="ngModel"
+        />
+        <div *ngIf="stockField.invalid && stockField.touched" class="text-danger">
+          Stock is required.
+        </div>
+      </div>
+  
+      
+      <button type="submit" class="btn btn-primary" [disabled]="editProductForm.invalid">
+        Save Changes
+      </button>
+    </form>
+  </div>
+  

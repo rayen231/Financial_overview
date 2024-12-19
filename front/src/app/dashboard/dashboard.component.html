@@ -1,0 +1,86 @@
+<!-- Financial Overview -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+rel="stylesheet"
+/>
+<div class="container my-4">
+  <h2>Financial Overview</h2>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Total Revenue</h5>
+          <p class="card-text">${{ financialOverview.totalRevenue }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Net Profit</h5>
+          <p class="card-text">${{ financialOverview.netProfit }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Expenses</h5>
+          <p class="card-text">${{ financialOverview.expenses }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Savings</h5>
+          <p class="card-text">${{ financialOverview.savings }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stocks List -->
+<div class="container my-4">
+  <h2>Stocks</h2>
+  <div class="row">
+    <div *ngIf="loading" class="d-flex justify-content-center align-items-center my-4">
+      <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="col-md-4" *ngFor="let stock of stocks" (click)="goToStockDetails(stock.symbol)">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ stock.name }} ({{ stock.symbol }})</h5>
+          <p class="card-text">Price: ${{ stock.price }}</p>
+          <p class="card-text" [ngClass]="{'text-success': stock.change >= 0, 'text-danger': stock.change < 0}">
+            Change: {{ stock.change }}%
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Stock Price Chart -->
+<div class="container my-4">
+  <h2>Stock Price Chart</h2>
+  <div *ngIf="loading" class="d-flex justify-content-center align-items-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+    <canvas #stockPriceChartCanvas></canvas>
+
+</div>

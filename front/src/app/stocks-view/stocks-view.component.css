@@ -1,0 +1,109 @@
+.container {
+    padding: 20px;
+  }
+  
+  .stocks-heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .stocks-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .stock-item {
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stock-card {
+    text-align: center;
+  }
+  
+  .stock-name {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .stock-price {
+    color: green;
+  }
+  
+  .stock-symbol {
+    color: gray;
+  }
+  
+  .no-results {
+    text-align: center;
+    color: red;
+  }
+  .stocks-section {
+    margin-top: 40px;
+  }
+  
+  .card {
+    border-radius: 15px;
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    background: #fff;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card:hover {
+    transform: translateY(-15px) scale(1.1); /* Slight upward motion with scale */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.4s ease, z-index 0.4s ease;
+  }
+  
+  .card-body {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .card-text {
+    font-size: 1.1rem;
+    color: #777;
+    font-weight: 600;
+  }
+  
+  .text-success {
+    color: #28a745;
+  }
+  
+  .text-danger {
+    color: #dc3545;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .col-md-4 {
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+  }
+  

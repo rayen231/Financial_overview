@@ -1,0 +1,29 @@
+<div class="chat-container">
+  <div class="chat-box">
+    <h1 class="chat-title">Chat</h1>
+    <div *ngFor="let message of chatMessages" class="chat-message" [ngClass]="{'user': message.isUser, 'bot': !message.isUser}">
+      <p [innerHTML]="message.text"></p> <!-- Use property binding for innerHTML -->
+      <small>{{ message.time }}</small>
+      <div *ngIf="message.isLoading" class="loading-spinner"></div> <!-- Display loading spinner if message is loading -->
+    </div>
+  </div>
+
+  <div class="chat-input-container">
+    <input 
+      type="text" 
+      [(ngModel)]="userQuery" 
+      (keyup.enter)="onSendQuery()" 
+      class="chat-input" 
+      placeholder="Type your message here">
+    <button (click)="onSendQuery()" class="send-btn">Send</button>
+  </div>
+
+  <div class="file-input-container">
+    <label for="file-input" class="file-label">Select File</label>
+    <input 
+      type="file" 
+      id="file-input" 
+      class="file-input" 
+      (change)="onFileChange($event)">
+  </div>
+</div>

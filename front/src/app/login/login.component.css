@@ -1,0 +1,47 @@
+/* login.component.css */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 2rem;
+  }
+  
+  .card-title {
+    font-weight: bold;
+  }
+  
+  .company-logo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .website-name {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .input-group-text {
+    background-color: #e9ecef;
+    border: none;
+  }
+  
+  .form-control:focus {
+    box-shadow: 0 0 10px rgba(78, 115, 223, 0.5);
+  }
+  
+  .btn-primary {
+    background-color: #4e73df;
+    border: none;
+    border-radius: 25px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #3751a7;
+  }
+
+  

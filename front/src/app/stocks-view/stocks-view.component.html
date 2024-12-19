@@ -1,0 +1,65 @@
+<div class="container">
+  <h1 class="stocks-heading text-center">Search for Stock</h1>
+  
+
+  <!-- Search Input and Button -->
+  <div class="search-bar mb-4">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Enter stock symbol"
+      class="form-control"
+    />
+    <button (click)="searchStock()" class="btn btn-primary mt-2">Search</button>
+  </div>
+
+  <div *ngIf="Loading" class="d-flex justify-content-center align-items-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <!-- Error message if any -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Display specific stock information if fetched -->
+  <div *ngIf="stock" class="stocks-section mt-4">
+    <div class="card" (click)="goToStockDetails(stock.symbol)">
+      <div class="card-body">
+        <h3 class="card-title">{{ stock.name }} ({{ stock.symbol }})</h3>
+        <p class="card-text">
+          <strong>Price:</strong> ${{ stock.price }}
+        </p>
+        <p class="card-text" [ngClass]="{'text-success': stock.change >= 0, 'text-danger': stock.change < 0}">
+          <strong>Change:</strong> {{ stock.change }}%
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display famous stocks when no search query is entered -->
+  <div *ngIf="!stock && famousStocks.length > 0" class="stocks-section mt-4">
+    <h2 class="text-center">Famous Stocks</h2>
+    <div class="row">
+      <div
+        class="col-md-4 mb-4"
+        *ngFor="let famousStock of famousStocks"
+        (click)="goToStockDetails(famousStock.symbol)"
+      >
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ famousStock.name }} ({{ famousStock.symbol }})</h3>
+            <p class="card-text">
+              <strong>Price:</strong> ${{ famousStock.price }}
+            </p>
+            <p class="card-text" [ngClass]="{'text-success': famousStock.change >= 0, 'text-danger': famousStock.change < 0}">
+              <strong>Change:</strong> {{ famousStock.change }}%
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <button (click)="goBack()" class="btn btn-secondary mb-4">Return</button>

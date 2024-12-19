@@ -1,0 +1,45 @@
+<!-- Add Tailwind classes -->
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-4xl font-extrabold text-center mb-8 text-blue-600">Latest Stock News</h1>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="flex justify-center items-center">
+    <div class="flex items-center text-blue-500 animate-spin">
+      <i class="bi bi-arrow-repeat text-4xl mr-2"></i>
+      <span class="text-lg">Loading...</span>
+    </div>
+  </div>
+
+  <!-- News Cards -->
+  <div *ngIf="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div 
+  *ngFor="let newsItem of stockNews" 
+  class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-300 transform hover:scale-105 active:scale-100"
+>
+  <a [href]="newsItem.url" target="_blank" class="block">
+    <div class="h-48 overflow-hidden">
+      <img 
+        [src]="newsItem.urlToImage" 
+        alt="News Image" 
+        class="w-full h-full object-cover" 
+      />
+    </div>
+    <div class="p-4">
+      <h5 class="text-xl font-semibold mb-2">{{ newsItem.title }}</h5>
+      <p class="text-gray-600 mb-4">{{ newsItem.description }}</p>
+      <p class="text-sm text-gray-500">
+        Published on: {{ newsItem.publishedAt | date:'medium' }}
+      </p>
+    </div>
+  </a>
+</div>
+
+  </div>
+
+  <!-- See More Button -->
+  <div class="flex justify-center mt-8">
+    <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300">
+      See More
+    </button>
+  </div>
+</div>
