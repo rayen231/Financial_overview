@@ -77,4 +77,23 @@ The backend is powered by **FastAPI** and designed with a microservices approach
 
 ---
 
+## ☕ **JEE Frontend (JSP/Servlet - Tomcat 10.1)**  
+
+A new Maven web module is available under `jee-front/` to mirror the Angular frontend using JSP + Servlet architecture while keeping AI/business logic isolated for external Python services.
+
+### Build
+```bash
+cd jee-front
+mvn clean package
+```
+
+### Run on Tomcat 10.1
+1. Import `jee-front` as a Maven project in IntelliJ.
+2. Configure a Tomcat 10.1 run configuration.
+3. Deploy `jee-front/target/jee-front-1.0-SNAPSHOT.war`.
+4. Open:
+   - `http://localhost:8080/jee-front/login`
+
+---
+
 Contributions are welcome! Feel free to open an issue or submit a pull request. Let’s build the future of financial insights together! 💡
