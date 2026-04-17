@@ -13,7 +13,7 @@ import java.util.*;
 @WebServlet("/insights")
 @MultipartConfig
 public class InsightsServlet extends BaseServlet {
-    private final BackendApiService backendApiService = new BackendApiService();
+    private static final BackendApiService backendApiService = new BackendApiService();
 
     @SuppressWarnings("unchecked")
     private List<Map<String, String>> history(HttpServletRequest req) {

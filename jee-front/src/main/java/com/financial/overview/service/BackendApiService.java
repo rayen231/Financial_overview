@@ -19,6 +19,7 @@ import java.util.UUID;
 public class BackendApiService {
     private static final String DEFAULT_STOCK_API_BASE_URL = "http://127.0.0.1:8000";
     private static final String DEFAULT_CHAT_API_BASE_URL = "http://127.0.0.1:8081";
+    private static final int CONNECT_TIMEOUT_SECONDS = 15;
 
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
@@ -26,7 +27,7 @@ public class BackendApiService {
     private final String chatApiBaseUrl;
 
     public BackendApiService() {
-        this.httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
+        this.httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(CONNECT_TIMEOUT_SECONDS)).build();
         this.objectMapper = new ObjectMapper();
         this.stockApiBaseUrl = resolveUrl("stock.api.base-url", "STOCK_API_BASE_URL", DEFAULT_STOCK_API_BASE_URL);
         this.chatApiBaseUrl = resolveUrl("chat.api.base-url", "CHAT_API_BASE_URL", DEFAULT_CHAT_API_BASE_URL);
