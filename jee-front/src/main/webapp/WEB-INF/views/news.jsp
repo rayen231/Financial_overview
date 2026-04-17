@@ -11,6 +11,9 @@
 <jsp:include page="header.jsp"/>
 <div class="container my-4">
     <h1 class="text-center text-primary mb-4">Latest Stock News</h1>
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-warning">${errorMessage}</div>
+    </c:if>
     <div class="row">
         <c:forEach var="newsItem" items="${stockNews}">
             <div class="col-md-4 mb-4">

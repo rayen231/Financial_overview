@@ -1,6 +1,6 @@
 package com.financial.overview.servlet;
 
-import com.financial.overview.service.MockDataService;
+import com.financial.overview.service.BackendApiService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +13,8 @@ import java.util.*;
 @WebServlet("/insights")
 @MultipartConfig
 public class InsightsServlet extends BaseServlet {
+    private final BackendApiService backendApiService = new BackendApiService();
+
     @SuppressWarnings("unchecked")
     private List<Map<String, String>> history(HttpServletRequest req) {
         HttpSession session = req.getSession(true);
@@ -34,22 +36,54 @@ public class InsightsServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Map<String, String>> messages = history(req);
-        String query = req.getParameter("userQuery");
+        String query = Optional.ofNullable(req.getParameter("userQuery")).orElse("").trim();
+        int userId = resolveUserId(req);
 
         Part filePart = null;
         try { filePart = req.getPart("file"); } catch (Exception ignored) {}
 
-        if (query != null && !query.isBlank()) {
-            messages.add(message("user", query));
-            messages.add(message("bot", MockDataService.chat(query)));
-        }
+        String pictureDescription = "";
+        try {
+            if (filePart != null && filePart.getSize() > 0) {
+                pictureDescription = backendApiService.uploadImage(
+                        filePart.getInputStream().readAllBytes(),
+                        filePart.getSubmittedFileName(),
+                        filePart.getContentType()
+                );
+            }
 
-        if (filePart != null && filePart.getSize() > 0) {
-            messages.add(message("bot", "[Simulated upload] File received: " + filePart.getSubmittedFileName()));
+            if (!query.isBlank()) {
+                messages.add(message("user", query));
+                messages.add(message("bot", backendApiService.chat(query, userId, pictureDescription)));
+            } else if (!pictureDescription.isBlank()) {
+                messages.add(message("bot", pictureDescription));
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            req.setAttribute("errorMessage", "Chat service request was interrupted.");
+        } catch (Exception e) {
+            req.setAttribute("errorMessage", "Unable to reach chatbot backend service.");
         }
 
         req.setAttribute("chatMessages", messages);
         render(req, resp, "insights.jsp");
+    }
+
+    private int resolveUserId(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        if (session == null) {
+            return 1;
+        }
+        Object value = session.getAttribute("userId");
+        if (value instanceof Number number) {
+            return number.intValue();
+        }
+        if (value instanceof String text) {
+            try {
+                return Integer.parseInt(text);
+            } catch (NumberFormatException ignored) {}
+        }
+        return 1;
     }
 
     private Map<String, String> message(String role, String text) {
