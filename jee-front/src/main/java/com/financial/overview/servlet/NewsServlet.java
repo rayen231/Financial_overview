@@ -11,7 +11,7 @@ import java.util.Collections;
 
 @WebServlet("/news")
 public class NewsServlet extends BaseServlet {
-    private static final BackendApiService backendApiService = new BackendApiService();
+    private final BackendApiService backendApiService = new BackendApiService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

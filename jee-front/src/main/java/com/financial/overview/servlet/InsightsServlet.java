@@ -13,7 +13,8 @@ import java.util.*;
 @WebServlet("/insights")
 @MultipartConfig
 public class InsightsServlet extends BaseServlet {
-    private static final BackendApiService backendApiService = new BackendApiService();
+    private static final long MAX_UPLOAD_BYTES = 5L * 1024L * 1024L;
+    private final BackendApiService backendApiService = new BackendApiService();
 
     @SuppressWarnings("unchecked")
     private List<Map<String, String>> history(HttpServletRequest req) {
@@ -45,11 +46,15 @@ public class InsightsServlet extends BaseServlet {
         String pictureDescription = "";
         try {
             if (filePart != null && filePart.getSize() > 0) {
-                pictureDescription = backendApiService.uploadImage(
-                        filePart.getInputStream().readAllBytes(),
-                        filePart.getSubmittedFileName(),
-                        filePart.getContentType()
-                );
+                if (filePart.getSize() > MAX_UPLOAD_BYTES) {
+                    req.setAttribute("errorMessage", "Uploaded file is too large. Maximum size is 5MB.");
+                } else {
+                    pictureDescription = backendApiService.uploadImage(
+                            filePart.getInputStream().readAllBytes(),
+                            filePart.getSubmittedFileName(),
+                            filePart.getContentType()
+                    );
+                }
             }
 
             if (!query.isBlank()) {
