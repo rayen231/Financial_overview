@@ -11,6 +11,9 @@
 <jsp:include page="header.jsp"/>
 <div class="container">
     <h2 class="mb-3">Chat</h2>
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-warning">${errorMessage}</div>
+    </c:if>
     <div class="border rounded p-3 mb-3" style="height: 350px; overflow-y: auto;">
         <c:forEach var="msg" items="${chatMessages}">
             <div class="mb-2 text-${msg.role == 'user' ? 'end' : 'start'}">
