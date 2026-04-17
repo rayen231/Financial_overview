@@ -14,7 +14,7 @@ import java.util.*;
 @MultipartConfig
 public class InsightsServlet extends BaseServlet {
     private static final long MAX_UPLOAD_BYTES = 5L * 1024L * 1024L;
-    private final BackendApiService backendApiService = new BackendApiService();
+    private final BackendApiService backendApiService = BackendApiService.getInstance();
 
     @SuppressWarnings("unchecked")
     private List<Map<String, String>> history(HttpServletRequest req) {
@@ -37,7 +37,8 @@ public class InsightsServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Map<String, String>> messages = history(req);
-        String query = Optional.ofNullable(req.getParameter("userQuery")).orElse("").trim();
+        String query = req.getParameter("userQuery");
+        query = query == null ? "" : query.trim();
         int userId = resolveUserId(req);
 
         Part filePart = null;

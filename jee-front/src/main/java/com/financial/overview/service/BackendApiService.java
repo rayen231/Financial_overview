@@ -20,17 +20,22 @@ public class BackendApiService {
     private static final String DEFAULT_STOCK_API_BASE_URL = "http://127.0.0.1:8000";
     private static final String DEFAULT_CHAT_API_BASE_URL = "http://127.0.0.1:8081";
     private static final int CONNECT_TIMEOUT_SECONDS = 15;
+    private static final BackendApiService INSTANCE = new BackendApiService();
 
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final String stockApiBaseUrl;
     private final String chatApiBaseUrl;
 
-    public BackendApiService() {
+    private BackendApiService() {
         this.httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(CONNECT_TIMEOUT_SECONDS)).build();
         this.objectMapper = new ObjectMapper();
         this.stockApiBaseUrl = resolveUrl("stock.api.base-url", "STOCK_API_BASE_URL", DEFAULT_STOCK_API_BASE_URL);
         this.chatApiBaseUrl = resolveUrl("chat.api.base-url", "CHAT_API_BASE_URL", DEFAULT_CHAT_API_BASE_URL);
+    }
+
+    public static BackendApiService getInstance() {
+        return INSTANCE;
     }
 
     public List<NewsItem> getGeneralNews() throws IOException, InterruptedException {
